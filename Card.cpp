@@ -8,55 +8,21 @@ void Map::SetMapSize(int x, int y)
 
 void Map::SetMap()
 {
-    // Initialize the 2D grid: each row gets resized once with CardType::None.
     tiles.resize(height);
-    for (int y = 0; y < height; ++y) {
+    for (int y = 0; y < height; ++y) 
         tiles[y].resize(width, CardType::None);
-    }
-
-    // Fill the grid in row-major order.
     for (int y = 0; y < height; ++y)
         for (int x = 0; x < width; ++x)
             tiles[x][y] = CardType::None;
-
 }
 
 std::vector<std::vector<CardType>> Map::GetMap()
 {
     return tiles;
 }
-
-CardType Map::GetRandomType()
-{
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(1, 8);
-    return getCardTypeFromID(dis(gen));
-}
-
 int Map::ConsoleMapCreator(CardType type)
 {
-    // For displaying purposes, simply return the card's ID.
     return getCardsParametres(type).id;
-}
-
-bool Map::IsTwoCardsV2(CardType type, int xMain, int yMain)
-{
-    int counter = 0;
-    // Count occurrences in all rows before the current one.
-    for (int y = 0; y < yMain; y++) {
-        for (int x = 0; x < width; x++) {
-            if (tiles[y][x] == type)
-                counter++;
-        }
-    }
-    // In the current row, count only the columns before the current cell.
-    for (int x = 0; x < xMain; x++) {
-        if (tiles[yMain][x] == type)
-            counter++;
-    }
-    // Allow placement if there are fewer than 2 occurrences so far.
-    return (counter < 2);
 }
 
 bool Map::checkForEmtySlotes()
@@ -68,11 +34,9 @@ bool Map::checkForEmtySlotes()
                 isEmpty = true;
                 break;
             }
-               
         }
     }
     return isEmpty;
-
 }
 
 CardType Map::getCardType(int x, int y)
@@ -101,22 +65,12 @@ std::string MapGUI::getTexture(CardType type)
 void MapGUI::initSprites()
 {
     initText();
-    CardType type;
     map.SetMapSize(width, height);
     map.SetMap();
 
     cardSprites.resize(width, std::vector<sf::Sprite>(height));
     cardTextures.resize(width, std::vector<sf::Texture>(height));
     cardRect.resize(width, std::vector<sf::RectangleShape>(height));
-    isOpened.resize(width, std::vector<bool>(height));
-    isSkipped.resize(width, std::vector<bool>(height));
-
-    backSprites.resize(width, std::vector<sf::Sprite>(height));
-    backTextures.resize(width, std::vector<sf::Texture>(height));
-
-    intMap.resize(width, std::vector<int>(height));
-   // for (std::vector <sf::Sprite> cardSprites in *cardSprites)
-  //  int xCounter = 0, yCounter = 0;
   
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
@@ -128,29 +82,9 @@ void MapGUI::initSprites()
             cardSprites[x][y].setScale(scaleX, scaleY);
 
             cardRect[x][y].setPosition(sf::Vector2f(32.f * x * scaleX, 32.f * y * scaleY));
-            cardRect[x][y].setSize(sf::Vector2f(32 * scaleX, 32 * scaleX));
-
-            isOpened[x][y] = false;
-            isSkipped[x][y] = false;
-
-            if (!backTextures[x][y].loadFromFile(getTexture(CardType::None)))
-                std::cout << "TEXTURE ERROR \n";
-            backSprites[x][y].setTexture(backTextures[x][y]);
-            backSprites[x][y].setPosition(sf::Vector2f(32.f * x * scaleX, 32.f * y * scaleY));
-            backSprites[x][y].setScale(scaleX, scaleY);
-
-            if (map.getCardType(x, y) == CardType::None)
-                std::cout << "-";
-            else if (map.getCardType(x, y) == CardType::Cross)
-                std::cout << "X";
-            else if (map.getCardType(x, y) == CardType::Circle)
-                std::cout << "o";
-       
-            //cardRect.setOrigin(tileSize.x / 2.f, tileSize.y / 2.f);
+            cardRect[x][y].setSize(sf::Vector2f(32 * scaleX, 32 * scaleX));                   
         }
-            std::cout << endl;
     }
-
 
         resetButton.setPosition(500, 480 - 32 * scaleX);
         resetButton.setSize(sf::Vector2f(32 * scaleX, 32 * scaleX));
@@ -159,9 +93,7 @@ void MapGUI::initSprites()
         okButton.setPosition(500 + 10 + 32 * scaleX, 480 - 32 * scaleX);
         okButton.setSize(sf::Vector2f(32 * scaleX, 32 * scaleX));
         okButton.setFillColor(sf::Color(26, 163, 56));
-  //  cardSprites[width, height];
 }
-
 
 void MapGUI::HandleClick(const sf::Vector2f& worldPos)
 {
@@ -169,20 +101,17 @@ void MapGUI::HandleClick(const sf::Vector2f& worldPos)
         for (int y = 0; y < height; ++y)
             if (cardRect[x][y].getGlobalBounds().contains(worldPos)) {
                 CardType playerType;
-                if (map.getCardType(x, y) == CardType::None) {
-                    
+                if (map.getCardType(x, y) == CardType::None && !isWin) {                    
                     if (isFirstPlayer) {
                         if (!cardTextures[x][y].loadFromFile(getTexture(CardType::Cross)))
                             std::cout << "TEXTURE ERROR \n";
                         isFirstPlayer = false;
-                        intMap[x][y] = 1;
                         playerType = CardType::Cross;
                     }                        
                     else {
                         isFirstPlayer = true;
                          if (!cardTextures[x][y].loadFromFile(getTexture(CardType::Circle)))
                             std::cout << "TEXTURE ERROR \n";
-                         intMap[x][y] = 0;
                          playerType = CardType::Circle;
                     }
                     map.setCardType(x, y, playerType);
@@ -192,35 +121,25 @@ void MapGUI::HandleClick(const sf::Vector2f& worldPos)
                             player1Score++;
                         else 
                             player2Score++;
-
-                      //  resetGame();
-                    }
-                       
+                    }                       
                     if (!map.checkForEmtySlotes() && !isWin) {
                         drawCounter++;
                         isWin = true;
                         winId = 0;
-                    //    resetGame();
                         std::cout << "DRAW";
-                    }
-                       
-                    cardSprites[x][y].setTexture(cardTextures[x][y]);
-                    
-                    
+                    }                     
+                    cardSprites[x][y].setTexture(cardTextures[x][y]);  
                 }   
             }         
     if (resetButton.getGlobalBounds().contains(worldPos))
         resetGame();
     if (okButton.getGlobalBounds().contains(worldPos) && isWin)
         resetGame();
-
 }
 
 
 bool MapGUI::isWinner(CardType type)
 {
-  
-    std::cout << "IsWinner - called" << endl;
     for (int y = 0; y < width; ++y) {
         for (int x = 0; x < width; ++x) {
 

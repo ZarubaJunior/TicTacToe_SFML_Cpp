@@ -1,12 +1,10 @@
-﻿  Game.cpp
-C:\Митя\Art\Programming\Projects\StudyProjects\TicTacToe\MatchingGame_Cpp\Game.cpp(10,86): warning C4244: 'argument': conversion from 'unsigned int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Митя\Art\Programming\Projects\StudyProjects\TicTacToe\MatchingGame_Cpp\Game.cpp(10,63): warning C4244: 'argument': conversion from 'unsigned int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
+﻿  Card.cpp
+C:\Митя\Art\Programming\Projects\StudyProjects\TicTacToe\MatchingGame_Cpp\Card.cpp(189,37): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Митя\Art\Programming\Projects\StudyProjects\TicTacToe\MatchingGame_Cpp\Card.cpp(196,37): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Митя\Art\Programming\Projects\StudyProjects\TicTacToe\MatchingGame_Cpp\Card.cpp(203,41): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Митя\Art\Programming\Projects\StudyProjects\TicTacToe\MatchingGame_Cpp\Card.cpp(211,32): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Митя\Art\Programming\Projects\StudyProjects\TicTacToe\MatchingGame_Cpp\Card.cpp(219,34): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Митя\Art\Programming\Projects\StudyProjects\TicTacToe\MatchingGame_Cpp\Card.cpp(226,37): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Митя\Art\Programming\Projects\StudyProjects\TicTacToe\MatchingGame_Cpp\Card.cpp(63): warning C4715: 'MapGUI::getTexture': not all control paths return a value
+C:\Митя\Art\Programming\Projects\StudyProjects\TicTacToe\MatchingGame_Cpp\Card.h(33): warning C4715: 'getCardsParametres': not all control paths return a value
   Matching game.vcxproj -> C:\Митя\Art\Programming\Projects\StudyProjects\TicTacToe\MatchingGame_Cpp\Debug\Matching game.exe
