@@ -1,0 +1,12 @@
+﻿  Game.cpp
+C:\Митя\Art\Programming\Projects\StudyProjects\TicTacToe\MatchingGame_Cpp\Game.cpp(10,86): warning C4244: 'argument': conversion from 'unsigned int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Митя\Art\Programming\Projects\StudyProjects\TicTacToe\MatchingGame_Cpp\Game.cpp(10,63): warning C4244: 'argument': conversion from 'unsigned int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Matching game.vcxproj -> C:\Митя\Art\Programming\Projects\StudyProjects\TicTacToe\MatchingGame_Cpp\Debug\Matching game.exe

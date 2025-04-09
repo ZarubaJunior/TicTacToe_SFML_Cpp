@@ -1,2 +1,0 @@
-C:\Митя\Art\Programming\Dz\Coind\Matching game\Debug\Matching game.exe
-C:\Митя\Art\Programming\Projects\StudyProjects\TicTacToe\MatchingGame_Cpp\Debug\Matching game.exe
