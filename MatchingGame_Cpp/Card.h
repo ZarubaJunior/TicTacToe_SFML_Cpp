@@ -1,0 +1,128 @@
+#pragma once
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>  
+#include <random>
+#include <SFML/Graphics.hpp>
+using namespace std;
+
+enum class CardType {
+	None,
+	Cross,
+	Circle
+
+};
+
+struct CardsParametres {
+	int id;
+};
+inline CardsParametres getCardsParametres(CardType type) {
+	switch (type)
+	{
+	case CardType::None:
+		return { 0 };
+		break;
+	case CardType::Cross:
+		return { 1 };
+		break;
+	case CardType::Circle:
+		break;
+		return { 2 };
+	}
+}
+
+
+struct CardsTextureParametres {
+	std::string texturePath;
+};
+inline CardsTextureParametres getCardsTextureParametres(CardType type) {
+	switch (type)
+	{
+	case CardType::None:
+		return { "Res//Textures//Back.png" };
+		break;
+	case CardType::Cross:
+		return { "Res//Textures//Spades.png" };
+		break;
+	case CardType::Circle:
+		return { "Res//Textures//Trumpets.png" };
+		break;		
+	}
+}
+
+inline CardType getCardTypeFromID(int id) {
+	switch (id) {
+	case 1: return CardType::Cross;
+	case 0: return CardType::Circle;
+	default:
+		// You can choose to throw an exception or return a default value
+		return CardType::None;
+	}
+}
+class Card
+{
+	std::vector<CardType> cards;
+};
+
+class Map
+{
+	
+public:
+	int width = 3, height = 3;
+	void SetMapSize(int x, int y);
+	void SetMap();
+	std::vector<std::vector<CardType>> GetMap();
+	CardType GetRandomType();
+	int ConsoleMapCreator(CardType type); 
+
+	std::vector<std::vector<CardType>> tiles;
+	bool IsTwoCards(CardType type);
+	bool IsTwoCardsV2(CardType type, int xMain, int yMain);
+	int counter = 0;
+	bool checkForEmtySlotes();
+
+	CardType getCardType(int x, int y);
+	void setCardType(int x, int y, CardType type);
+
+	
+};
+class MapGUI {
+public:
+	std::vector < std::vector<sf::Sprite>> cardSprites;
+	std::vector < std::vector<sf::Texture>> cardTextures;
+	std::vector < std::vector<sf::RectangleShape>> cardRect;
+	std::vector < std::vector<bool>> isOpened;
+	std::vector < std::vector<bool>> isSkipped;
+	std::vector < std::vector<sf::Sprite>> backSprites;
+	std::vector < std::vector<sf::Texture>> backTextures;
+	std::string getTexture(CardType type);
+	void initSprites();
+	Map map;
+	void drawMapGUI(sf::RenderWindow& window);
+	int width = 3, height = 3;
+	float scaleX = 5, scaleY = 5;
+	void HandleClick(const sf::Vector2f& worldPos);
+	int clickCounter = 0;
+	
+	CardType previousCardClicked =CardType::None;
+	sf::Vector2i prevCardPos = { 0,0 };
+	bool isFirstPlayer = true;
+	bool isWinner(CardType type);
+	std::vector < std::vector<int>> intMap;
+	bool isWin = false;
+	void resetGame();
+	sf::RectangleShape resetButton;
+	sf::RectangleShape okButton;
+	sf::Text okText;
+	void initText();
+	sf::Font font;
+	sf::Text Player1Text;
+	sf::Text Player2Text;
+	sf::Text DrawCounterText;
+	sf::Text EndGameText;
+	sf::Text resetText;
+	int player1Score = 0, player2Score =0, drawCounter=0;
+	int winId;
+};
